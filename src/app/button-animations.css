@@ -1,0 +1,27 @@
+/* Button Animations - Separate file to avoid budget constraints */
+
+/* Animated border for Start Scanner button when enabled */
+.btn-primary:not(:disabled) {
+  position: relative;
+  background: linear-gradient(45deg, #007bff, #0056b3, #007bff);
+  background-size: 200% 200%;
+  animation: gradientShift 2s ease-in-out infinite;
+  box-shadow: 0 0 0 2px #007bff, 0 0 0 4px rgba(0, 123, 255, 0.3);
+}
+
+.btn-primary:not(:disabled):hover {
+  animation: gradientShift 1s ease-in-out infinite;
+  box-shadow: 0 0 0 3px #007bff, 0 0 0 6px rgba(0, 123, 255, 0.5);
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} 

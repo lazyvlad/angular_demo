@@ -1,0 +1,142 @@
+<div class="scanner-container">
+  <!-- Camera View Area -->
+  <div class="camera-view" id="barkoder-container">
+    <!-- Camera feed will be displayed here -->
+  </div>
+
+  <!-- Control Panel -->
+  <div class="control-panel">
+    <!-- Status Section -->
+    <div class="status-section">
+      <div class="status-item">
+        <span>📊</span>
+        <span>{{ getCameraStatus() }}</span>
+      </div>
+      <div class="status-item">
+        <span>📋</span>
+        <span>{{ getSupportedFormats() }}</span>
+      </div>
+      <div class="status-item">
+        <span>📐</span>
+        <span>{{ getCameraSettings() }}</span>
+      </div>
+    </div>
+
+    <!-- Version Information -->
+    <div class="version-info">
+      {{ version }}
+    </div>
+
+    <!-- Camera Selector -->
+    <div class="camera-selector" *ngIf="availableCameras.length > 1">
+      <label for="camera-select">📹 Select Camera:</label>
+      <select 
+        id="camera-select" 
+        [(ngModel)]="selectedCameraId" 
+        (change)="onCameraSelectionChange()"
+        [disabled]="isScanning"
+        class="camera-dropdown">
+        <option 
+          *ngFor="let camera of availableCameras" 
+          [value]="camera.deviceId">
+          {{ camera.label || 'Camera ' + (availableCameras.indexOf(camera) + 1) }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Resolution Selector -->
+    <div class="resolution-selector">
+      <label for="resolution-select">📐 Select Resolution:</label>
+      <select 
+        id="resolution-select" 
+        [(ngModel)]="selectedResolution" 
+        [disabled]="isScanning"
+        class="resolution-dropdown">
+        <option 
+          *ngFor="let resolution of getAvailableResolutions()" 
+          [value]="resolution.value"
+          [disabled]="resolution.disabled">
+          {{ resolution.name }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Camera Capabilities Display -->
+    <div class="camera-capabilities" *ngIf="availableCameras.length > 1 && selectedCameraId">
+      <div class="capabilities-header">
+        <span>🔍 Camera Capabilities</span>
+        <button 
+          class="btn btn-secondary btn-sm" 
+          [disabled]="!ready || isScanning" 
+          (click)="testCameraCapabilities()">
+          🧪 Test Capabilities
+        </button>
+      </div>
+      <div class="capabilities-content">
+        {{ getSelectedCameraCapabilities() }}
+      </div>
+    </div>
+
+    <!-- Button Controls -->
+    <div class="button-container">
+      <button 
+        class="btn btn-primary" 
+        [disabled]="!ready || isLoading || isScanning" 
+        (click)="startScanner()">
+        <span *ngIf="isLoading" class="loading"></span>
+        🎥 {{ isLoading ? 'Starting...' : 'Start Scanner' }}
+      </button>
+
+      <button 
+        class="btn btn-danger" 
+        [disabled]="!ready || !isScanning" 
+        (click)="stopScanner()">
+        ⏹️ Stop Scanner
+      </button>
+
+      <!-- Hidden buttons - functionality now integrated into main Start Scanner button -->
+      <!-- 
+      <button 
+        class="btn btn-secondary" 
+        [disabled]="!ready || isLoading || isScanning || availableCameras.length <= 1" 
+        (click)="startScannerWithSelectedCamera()">
+        📹 Start with Selected Camera
+      </button>
+
+      <button 
+        class="btn btn-warning" 
+        [disabled]="!ready || isLoading || isScanning" 
+        (click)="startScannerWithAlternativeSettings()">
+        ⚙️ Try Alternative Settings
+      </button>
+      -->
+
+      <!-- Hidden test buttons - functionality now integrated into main Start Scanner button -->
+      <!-- 
+      <button 
+        class="btn btn-secondary" 
+        [disabled]="!ready || isLoading || isScanning" 
+        (click)="startScannerWithFHD()">
+        📺 Try FHD Resolution
+      </button>
+
+      <button 
+        class="btn btn-warning" 
+        [disabled]="!ready || isLoading || isScanning" 
+        (click)="startScannerWithOverconstrainedSettings()">
+        🎯 Test OverconstrainedError
+      </button>
+      -->
+    </div>
+
+    <!-- Results Section -->
+    <div class="results-section">
+      <div class="results-header">
+        📄 Scan Results & Messages
+      </div>
+      <div class="results-content">
+        {{ scanResult || 'Ready to scan barcodes. Click "Start Scanner" to begin.' }}
+      </div>
+    </div>
+  </div>
+</div>
