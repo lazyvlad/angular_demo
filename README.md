@@ -309,6 +309,7 @@ The built application will be in the `dist/` directory.
 - For production use, contact sales@barkoder.com
 
 > ⚠️ **Warning**: This project comes with a trial license, but it may have expired by the time you use it. You will likely need to create a new trial license from the [barKoder Portal](https://barkoder.com/register) to get the demo working properly.
+>
 > 💡 **Alternative**: You can also use the [barKoder Quote System](https://barkoder.com/request-quote) which offers an option to automatically generate a trial license while creating your barKoder account. This provides a seamless way to get started with both account creation and license generation in one step.
 
 #### Production License
