@@ -34,12 +34,23 @@ A modern, responsive barcode scanning application built with Angular and the bar
    npm install
    ```
 
-3. **Start the development server**:
+3. **Run build, needed the first time we clone the repository**:
+   ```bash
+   npm run build
+   ```   
+
+4. **Start the development server**:
    ```bash
    ng serve
    ```
 
-4. **Open your browser** and navigate to `http://localhost:4200`
+5. **Open your browser** and navigate to `http://localhost:4200`
+6. To create production builds just run 
+   ```bash
+   npm run build
+   ```
+   again
+
 
 
 ## 📱 How to Use
@@ -295,10 +306,12 @@ src/
 ### Building for Production
 
 ```bash
-ng build --configuration production
+npm run build
 ```
 
 The built application will be in the `dist/` directory.
+
+> 🔒 **Production Requirement**: Camera access requires HTTPS in production environments. Modern browsers block camera access on non-secure (HTTP) connections for security reasons. Ensure your production server is configured with a valid SSL certificate and serves the application over HTTPS.
 
 ### License Management
 
