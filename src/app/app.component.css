@@ -214,12 +214,14 @@
     margin: 10px;
     min-height: 150px;
     max-height: 40vh;
+	min-width:100%;
   }
   
   .control-panel {
     padding: 15px;
     max-height: 60vh;
     min-height: 250px;
+	min-width:100%;
   }
   
   .status-section {

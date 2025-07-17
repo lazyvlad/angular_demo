@@ -23,4 +23,5 @@ body {
   flex-direction: row;
   overflow: hidden;
   padding: 2rem;
+  flex-wrap: wrap;
 }
