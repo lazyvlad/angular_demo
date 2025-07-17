@@ -4,7 +4,7 @@ A modern, responsive barcode scanning application built with Angular and the bar
 
 ## 🚀 Features
 
-- **Real-time Barcode Scanning**: Scan QR codes, EAN8, EAN13, and PDF417 barcodes
+- **Real-time Barcode Scanning**: Scan QR codes, EAN8, EAN13, and PDF417 barcodes (and other symbologies, full list is provided further in this document)
 - **Multi-Camera Support**: Switch between available cameras on your device
 - **Resolution Management**: Choose between HD (1280x720) and Full HD (1920x1080) resolutions
 - **Camera Capability Testing**: Automatic testing of camera resolutions and capabilities
@@ -94,20 +94,40 @@ You can enable these additional barcode types by modifying the `setEnabledDecode
 
 ```typescript
 // Add these to your setEnabledDecoders call
-Barkoder.constants.Decoders.Code128,
-Barkoder.constants.Decoders.Code39,
-Barkoder.constants.Decoders.DataMatrix,
-Barkoder.constants.Decoders.Aztec,
-Barkoder.constants.Decoders.UPCA,
-Barkoder.constants.Decoders.UPCE,
-Barkoder.constants.Decoders.Codabar,
-Barkoder.constants.Decoders.ITF14,
-Barkoder.constants.Decoders.Code93,
-Barkoder.constants.Decoders.MicroQR,
-Barkoder.constants.Decoders.MaxiCode,
-Barkoder.constants.Decoders.DotCode,
-Barkoder.constants.Decoders.VIN
+    Barkoder.constants.Decoders.Aztec
+    Barkoder.constants.Decoders.AztecCompact
+    Barkoder.constants.Decoders.QR
+    Barkoder.constants.Decoders.QRMicro
+    Barkoder.constants.Decoders.Code128
+    Barkoder.constants.Decoders.Code93
+    Barkoder.constants.Decoders.Code39
+    Barkoder.constants.Decoders.Codabar
+    Barkoder.constants.Decoders.Code11
+    Barkoder.constants.Decoders.Msi
+    Barkoder.constants.Decoders.UpcA
+    Barkoder.constants.Decoders.UpcE
+    Barkoder.constants.Decoders.UpcE1
+    Barkoder.constants.Decoders.Ean13
+    Barkoder.constants.Decoders.Ean8
+    Barkoder.constants.Decoders.PDF417
+    Barkoder.constants.Decoders.PDF417Micro
+    Barkoder.constants.Decoders.Datamatrix
+    Barkoder.constants.Decoders.Code25
+    Barkoder.constants.Decoders.Interleaved25
+    Barkoder.constants.Decoders.ITF14
+    Barkoder.constants.Decoders.IATA25
+    Barkoder.constants.Decoders.Matrix25
+    Barkoder.constants.Decoders.Datalogic25
+    Barkoder.constants.Decoders.COOP25
+    Barkoder.constants.Decoders.Code32
+    Barkoder.constants.Decoders.Telepen
+    Barkoder.constants.Decoders.Dotcode
+    Barkoder.constants.Decoders.Databar14
+    Barkoder.constants.Decoders.DatabarLimited
+    Barkoder.constants.Decoders.DatabarExpanded
 ```
+
+> ⚠️ **Warning**: Having all symbologies enabled is not recommended unless you are certain you need them all. Enabling too many barcode types can significantly slow down the scanning process as the scanner must check for all enabled symbologies. For optimal performance, only enable the barcode types you actually need for your use case.
 
 ## 🔧 Configuration Examples
 
