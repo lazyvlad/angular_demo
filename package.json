@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "prebuild": "shx cp ./node_modules/barkoder-wasm/barkoder.wasm ./src && shx cp ./node_modules/barkoder-wasm/barkoder_nosimd.wasm ./src",
-    "build": "ng build --base-href /angular-demo/",
+    "build": "ng build --base-href /angular-test/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

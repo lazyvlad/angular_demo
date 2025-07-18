@@ -334,6 +334,19 @@ export class AppComponent {
     console.log('Using resolution:', resolutionToUse);
     
     try {
+      // Set the camera ID if one is selected
+      if (this.selectedCameraId) {
+        try {
+          this.Barkoder.setCameraId(this.selectedCameraId);
+          console.log('Set camera ID to:', this.selectedCameraId);
+        } catch (cameraIdError) {
+          console.warn('Failed to set camera ID, using default camera:', cameraIdError);
+          // Continue with default camera selection
+        }
+      } else {
+        console.log('No specific camera selected, using default');
+      }
+      
       // Set the camera resolution before starting
       if (resolutionToUse === 'FHD') {
         this.Barkoder.setCameraResolution(this.Barkoder.constants.CameraResolution.FHD);
@@ -343,7 +356,7 @@ export class AppComponent {
         console.log('Set camera resolution to HD (1280x720)');
       }
     } catch (error) {
-      console.error('Error setting camera resolution:', error);
+      console.error('Error setting camera configuration:', error);
     }
     
     // Add a small delay to ensure everything is ready
@@ -388,6 +401,12 @@ export class AppComponent {
     this.scanResult = '';
     
     try {
+      // Set the camera ID if one is selected
+      if (this.selectedCameraId) {
+        this.Barkoder.setCameraId(this.selectedCameraId);
+        console.log('Set camera ID to:', this.selectedCameraId);
+      }
+      
       // Try with lower resolution first
       this.Barkoder.setCameraResolution(this.Barkoder.constants.CameraResolution.HD);
       console.log('Set camera resolution to HD');
@@ -416,6 +435,12 @@ export class AppComponent {
     this.scanResult = '';
     
     try {
+      // Set the camera ID if one is selected
+      if (this.selectedCameraId) {
+        this.Barkoder.setCameraId(this.selectedCameraId);
+        console.log('Set camera ID to:', this.selectedCameraId);
+      }
+      
       // Set to FHD resolution which might cause issues
       this.Barkoder.setCameraResolution(this.Barkoder.constants.CameraResolution.FHD);
       console.log('Set camera resolution to FHD (1920x1080)');
@@ -451,19 +476,23 @@ export class AppComponent {
     this.isScanning = false;
     
     try {
-      // Test direct access to the selected camera first
-      console.log('Testing direct access to selected camera...');
-      const stream = await navigator.mediaDevices.getUserMedia({ 
-        video: { 
-          deviceId: { exact: this.selectedCameraId },
-          width: { ideal: 1280 }, 
-          height: { ideal: 720 } 
-        } 
-      });
-      console.log('Selected camera direct access successful:', stream);
-      stream.getTracks().forEach(track => track.stop());
+      // Set the camera ID for Barkoder
+      this.Barkoder.setCameraId(this.selectedCameraId);
+      console.log('Set camera ID to:', this.selectedCameraId);
       
-      // Now try with Barkoder
+      // Set camera resolution based on selection or default to max supported
+      const resolutionToUse = this.selectedResolution || this.getMaxSupportedResolution();
+      console.log('Using resolution:', resolutionToUse);
+      
+      if (resolutionToUse === 'FHD') {
+        this.Barkoder.setCameraResolution(this.Barkoder.constants.CameraResolution.FHD);
+        console.log('Set camera resolution to FHD (1920x1080)');
+      } else {
+        this.Barkoder.setCameraResolution(this.Barkoder.constants.CameraResolution.HD);
+        console.log('Set camera resolution to HD (1280x720)');
+      }
+      
+      // Now start with Barkoder
       setTimeout(() => {
         try {
           this.Barkoder.startScanner((result: BKResult) => {
@@ -480,10 +509,10 @@ export class AppComponent {
         }
       }, 100);
       
-    } catch (directError: any) {
-      console.error('Selected camera direct access failed:', directError);
+    } catch (error: any) {
+      console.error('Error setting up selected camera:', error);
       this.isLoading = false;
-      this.scanResult = `❌ Selected camera failed: ${directError.message}\n\nTry selecting a different camera or using the default "Start Scanner" button.`;
+      this.handleScannerError(error);
     }
   }
 
@@ -820,6 +849,8 @@ Error details: ${error.message}`;
   public onCameraSelectionChange(): void {
     // Update selected resolution to the maximum supported for this camera
     this.selectedResolution = this.getMaxSupportedResolution();
+    console.log('Camera selection changed to:', this.selectedCameraId);
+    console.log('Updated resolution to:', this.selectedResolution);
   }
 
   public async testCameraCapabilities(): Promise<void> {
